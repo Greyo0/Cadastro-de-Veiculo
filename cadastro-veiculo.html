@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Registro de Veículo — Ordem Paranormal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="dossier">
+  <div class="stamp">SIGILOSO</div>
+  <h1>Registro de Veículo</h1>
+  <p class="subtitulo">Ficha de cadastro — divisão de logística e ocultismo</p>
+
+  <form id="formVeiculo">
+    <label for="modelo">Modelo</label>
+    <select id="modelo" name="modelo" required>
+      <option value="" disabled selected>Selecione um modelo</option>
+    </select>
+    <p class="aviso-vazio" id="avisoSemModelo" hidden>
+      Nenhum modelo cadastrado. <a href="cadastro-modelo.html">Cadastre um modelo</a> antes de registrar o veículo.
+    </p>
+
+    <label for="placa">Placa</label>
+    <input type="text" id="placa" name="placa" placeholder="ex: ABC-1234 ou ABC1D23" maxlength="8" required>
+
+    <label for="cor">Cor</label>
+    <select id="cor" name="cor" required>
+      <option value="" disabled selected>Selecione uma cor</option>
+      <option value="Preto">Preto</option>
+      <option value="Branco">Branco</option>
+      <option value="Cinza">Cinza</option>
+      <option value="Prata">Prata</option>
+      <option value="Vermelho">Vermelho</option>
+      <option value="Azul">Azul</option>
+      <option value="Verde">Verde</option>
+      <option value="Amarelo">Amarelo</option>
+      <option value="Marrom">Marrom</option>
+      <option value="Outra">Outra</option>
+    </select>
+
+    <button type="submit">Arquivar Registro</button>
+  </form>
+
+  <div class="arquivo">
+    <h2>Veículos já registrados</h2>
+    <ul id="listaVeiculos">
+      <li class="vazio">Nenhum registro nos arquivos ainda.</li>
+    </ul>
+  </div>
+
+  <a class="link-secundario" href="cadastro-modelo.html">Gerenciar modelos →</a>
+
+  <p class="rodape">Documento de circulação restrita</p>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,50 +1,141 @@
-const veiculosRegistrados = [];
-
 const form = document.getElementById('formVeiculo');
-const inputVeiculo = document.getElementById('veiculo');
+const selectModelo = document.getElementById('modelo');
 const inputCor = document.getElementById('cor');
 const lista = document.getElementById('listaVeiculos');
+const avisoSemModelo = document.getElementById('avisoSemModelo');
 
-function renderizarLista() {
-  lista.innerHTML = '';
 
-  if (veiculosRegistrados.length === 0) {
-    const vazio = document.createElement('li');
-    vazio.className = 'vazio';
-    vazio.textContent = 'Nenhum registro nos arquivos ainda.';
-    lista.appendChild(vazio);
-    return;
-  }
+async function carregarModelos() {
+    const resposta = await fetch('/api/modelos');
 
-  veiculosRegistrados.forEach((registro) => {
-    const item = document.createElement('li');
+    if (!resposta.ok) {
+        throw new Error('Erro ao carregar modelos');
+    }
 
-    const nome = document.createElement('span');
-    nome.textContent = registro.veiculo;
-
-    const cor = document.createElement('span');
-    cor.className = 'cor';
-    cor.textContent = registro.cor;
-
-    item.appendChild(nome);
-    item.appendChild(cor);
-    lista.appendChild(item);
-  });
+    return await resposta.json();
 }
 
-form.addEventListener('submit', function (evento) {
-  evento.preventDefault();
 
-  const veiculo = inputVeiculo.value.trim();
-  const cor = inputCor.value.trim();
+async function popularSelectModelos() {
+    try {
+        const modelos = await carregarModelos();
 
-  if (!veiculo || !cor) return;
+        selectModelo.innerHTML =
+            '<option value="" disabled selected>Selecione um modelo</option>';
 
-  veiculosRegistrados.push({ veiculo, cor });
-  renderizarLista();
+        modelos.forEach(modelo => {
+            const opcao = document.createElement('option');
 
-  form.reset();
-  inputVeiculo.focus();
+            opcao.value = modelo.id;
+            opcao.textContent = modelo.nome;
+
+            selectModelo.appendChild(opcao);
+        });
+
+        avisoSemModelo.hidden = modelos.length !== 0;
+
+    } catch (erro) {
+        console.error(erro);
+    }
+}
+
+
+async function carregarVeiculos() {
+    const resposta = await fetch('/api/veiculos');
+
+    if (!resposta.ok) {
+        throw new Error('Erro ao carregar veículos');
+    }
+
+    return await resposta.json();
+}
+
+
+async function renderizarListaVeiculos() {
+    try {
+        const veiculos = await carregarVeiculos();
+
+        lista.innerHTML = '';
+
+        if (veiculos.length === 0) {
+            const vazio = document.createElement('li');
+
+            vazio.className = 'vazio';
+            vazio.textContent = 'Nenhum registro nos arquivos ainda.';
+
+            lista.appendChild(vazio);
+
+            return;
+        }
+
+        veiculos.forEach(registro => {
+            const item = document.createElement('li');
+
+            const nome = document.createElement('span');
+
+            nome.textContent = registro.modelo;
+
+            const cor = document.createElement('span');
+
+            cor.className = 'cor';
+            cor.textContent = registro.cor;
+
+            item.appendChild(nome);
+            item.appendChild(cor);
+
+            lista.appendChild(item);
+        });
+
+    } catch (erro) {
+        console.error(erro);
+    }
+}
+
+
+form.addEventListener('submit', async function (evento) {
+    evento.preventDefault();
+
+    const modeloId = selectModelo.value;
+    const cor = inputCor.value;
+
+    if (!modeloId || !cor) {
+        return;
+    }
+
+    try {
+        const resposta = await fetch('/api/veiculos', {
+            method: 'POST',
+
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify({
+                modeloId: modeloId,
+                cor: cor
+            })
+        });
+
+        const dados = await resposta.json();
+
+        if (!resposta.ok) {
+            alert(dados.erro);
+            return;
+        }
+
+        form.reset();
+
+        selectModelo.focus();
+
+        await renderizarListaVeiculos();
+
+    } catch (erro) {
+        console.error(erro);
+
+        alert('Erro ao conectar com o servidor.');
+    }
 });
 
-renderizarLista();
+
+popularSelectModelos();
+renderizarListaVeiculos();

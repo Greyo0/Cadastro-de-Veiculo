@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Registro de Modelos — Ordem Paranormal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="dossier">
+  <div class="stamp">SIGILOSO</div>
+  <h1>Registro de Modelos</h1>
+  <p class="subtitulo">Catálogo interno — modelos autorizados para uso em campo</p>
+
+  <form id="formModelo">
+    <label for="nomeModelo">Nome do modelo</label>
+    <input type="text" id="nomeModelo" name="nomeModelo" placeholder="ex: Van Kombi 1978" required>
+
+    <button type="submit">Adicionar ao Catálogo</button>
+  </form>
+
+  <div class="arquivo">
+    <h2>Modelos já cadastrados</h2>
+    <ul id="listaModelos">
+      <li class="vazio">Nenhum modelo cadastrado ainda.</li>
+    </ul>
+  </div>
+
+  <a class="link-secundario" href="cadastro-veiculo.html">← Voltar ao registro de veículo</a>
+
+  <p class="rodape">Documento de circulação restrita</p>
+</div>
+
+<script src="scriptmodelo.js"></script>
+</body>
+</html>
