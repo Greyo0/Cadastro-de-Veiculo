@@ -100,6 +100,7 @@ app.get('/api/veiculos', (req, res) => {
                 id: veiculo.id,
                 modeloId: veiculo.modeloId,
                 modelo: modelo ? modelo.nome : 'Modelo não encontrado',
+                placa: veiculo.placa,
                 cor: veiculo.cor
             };
         });
@@ -118,11 +119,22 @@ app.get('/api/veiculos', (req, res) => {
 
 app.post('/api/veiculos', (req, res) => {
     try {
-        const { modeloId, cor } = req.body;
+        const { modeloId, placa, cor } = req.body;
 
-        if (!modeloId || !cor) {
+        if (!modeloId || !placa || !cor) {
             return res.status(400).json({
-                erro: 'Modelo e cor são obrigatórios'
+                erro: 'Modelo, placa e cor são obrigatórios'
+            });
+        }
+
+        const placaFormatada = placa.trim().toUpperCase();
+
+        const regexPlacaAntiga = /^[A-Z]{3}-?\d{4}$/;
+        const regexPlacaMercosul = /^[A-Z]{3}\d[A-Z]\d{2}$/;
+
+        if (!regexPlacaAntiga.test(placaFormatada) && !regexPlacaMercosul.test(placaFormatada)) {
+            return res.status(400).json({
+                erro: 'Placa em formato inválido'
             });
         }
 
@@ -138,6 +150,16 @@ app.post('/api/veiculos', (req, res) => {
             });
         }
 
+        const placaExistente = banco.veiculos.find(
+            veiculo => veiculo.placa === placaFormatada
+        );
+
+        if (placaExistente) {
+            return res.status(409).json({
+                erro: 'Placa já cadastrada'
+            });
+        }
+
         const novoId =
             banco.veiculos.length > 0
                 ? Math.max(...banco.veiculos.map(veiculo => veiculo.id)) + 1
@@ -146,6 +168,7 @@ app.post('/api/veiculos', (req, res) => {
         const novoVeiculo = {
             id: novoId,
             modeloId: Number(modeloId),
+            placa: placaFormatada,
             cor: cor
         };
 
@@ -157,6 +180,7 @@ app.post('/api/veiculos', (req, res) => {
             id: novoVeiculo.id,
             modeloId: novoVeiculo.modeloId,
             modelo: modelo.nome,
+            placa: novoVeiculo.placa,
             cor: novoVeiculo.cor
         });
 

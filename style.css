@@ -161,6 +161,15 @@ button:active{ transform:scale(0.98); }
   gap:10px;
 }
 
+#listaVeiculos li .placa{
+  font-family:monospace;
+  letter-spacing:1px;
+  color:var(--paper);
+  background:var(--rust);
+  padding:1px 6px;
+  border-radius:2px;
+}
+
 #listaVeiculos li .cor{
   color:var(--rust);
   font-style:italic;
