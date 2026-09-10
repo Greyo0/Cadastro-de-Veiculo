@@ -179,4 +179,4 @@ form.addEventListener('submit', async function (evento) {
 
 
 popularSelectModelos();
-renderizarListaVeiculos();
+renderizarListaVeiculos(); 
