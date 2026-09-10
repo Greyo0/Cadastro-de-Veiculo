@@ -1,0 +1,163 @@
+:root{
+  --paper: #e9e0c6;
+  --paper-dark: #d8cca4;
+  --ink: #241f16;
+  --void: #0b0a08;
+  --blood: #6e1414;
+  --rust: #5c3a20;
+}
+
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: radial-gradient(ellipse at 50% 0%, #1a1712 0%, var(--void) 70%);
+  font-family:'Special Elite', monospace;
+  color:var(--ink);
+  padding:32px 16px;
+}
+
+.dossier{
+  position:relative;
+  width:100%;
+  max-width:420px;
+  background:var(--paper);
+  background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.02) 0 2px, transparent 2px 4px);
+  border:1px solid #00000030;
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,0.8), inset 0 0 60px rgba(90,60,20,0.15);
+  padding:36px 32px 32px;
+}
+
+.dossier::before{
+  content:"";
+  position:absolute; inset:10px;
+  border:1px solid rgba(90,60,30,0.4);
+  pointer-events:none;
+}
+
+.stamp{
+  position:absolute;
+  top:18px; right:22px;
+  font-family:'Cinzel', serif;
+  font-size:11px;
+  letter-spacing:2px;
+  color:var(--blood);
+  border:2px solid var(--blood);
+  padding:4px 8px;
+  transform:rotate(8deg);
+  opacity:0.75;
+}
+
+h1{
+  font-family:'Cinzel', serif;
+  font-size:22px;
+  letter-spacing:1px;
+  margin:0 0 4px;
+  color:var(--ink);
+}
+
+.subtitulo{
+  font-size:12px;
+  color:var(--rust);
+  margin:0 0 26px;
+  border-bottom:1px dashed var(--rust);
+  padding-bottom:14px;
+}
+
+label{
+  display:block;
+  font-size:13px;
+  margin-bottom:6px;
+  color:var(--rust);
+}
+
+input{
+  width:100%;
+  font-family:'Special Elite', monospace;
+  font-size:15px;
+  color:var(--ink);
+  background:var(--paper-dark);
+  border:none;
+  border-bottom:2px solid var(--rust);
+  padding:9px 8px;
+  margin-bottom:22px;
+  outline:none;
+}
+
+input:focus{
+  border-bottom-color:var(--blood);
+  background:#e2d5ab;
+}
+
+button{
+  width:100%;
+  font-family:'Cinzel', serif;
+  font-size:14px;
+  letter-spacing:2px;
+  color:var(--paper);
+  background:var(--blood);
+  border:1px solid #2c0505;
+  padding:13px;
+  cursor:pointer;
+  transition:background .15s ease, transform .05s ease;
+}
+
+button:hover{ background:#8a1a1a; }
+button:active{ transform:scale(0.98); }
+
+.arquivo{
+  margin-top:28px;
+  padding-top:20px;
+  border-top:1px dashed var(--rust);
+}
+
+.arquivo h2{
+  font-family:'Cinzel', serif;
+  font-size:14px;
+  letter-spacing:1px;
+  color:var(--ink);
+  margin:0 0 12px;
+}
+
+#listaVeiculos{
+  list-style:none;
+  margin:0;
+  padding:0;
+  max-height:180px;
+  overflow-y:auto;
+}
+
+#listaVeiculos li{
+  font-size:13px;
+  padding:8px 10px;
+  margin-bottom:6px;
+  background:var(--paper-dark);
+  border-left:3px solid var(--blood);
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+#listaVeiculos li .cor{
+  color:var(--rust);
+  font-style:italic;
+}
+
+#listaVeiculos li.vazio{
+  border-left-color:var(--rust);
+  color:var(--rust);
+  font-style:italic;
+  justify-content:center;
+}
+
+.rodape{
+  margin-top:16px;
+  font-size:10px;
+  text-align:center;
+  color:var(--rust);
+  opacity:0.7;
+}

@@ -1,13 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<title>Registro de Veículo — Ordo Realitas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    
+<div class="dossier">
+  <div class="stamp">SIGILOSO</div>
+  <h1>Registro de Veículo</h1>
+  <p class="subtitulo">Ficha de cadastro — divisão de logística e ocultismo</p>
 
+  <form id="formVeiculo">
+    <label for="veiculo">Veículo</label>
+    <input type="text" id="veiculo" name="veiculo" placeholder="ex: Van Kombi 1978" required>
+
+    <label for="cor">Cor</label>
+    <input type="text" id="cor" name="cor" placeholder="ex: Cinza esverdeado" required>
+
+    <button type="submit">Arquivar Registro</button>
+  </form>
+
+  <div class="arquivo">
+    <h2>Veículos já registrados</h2>
+    <ul id="listaVeiculos">
+      <li class="vazio">Nenhum registro nos arquivos ainda.</li>
+    </ul>
+  </div>
+
+  <p class="rodape">Documento de circulação restrita</p>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
