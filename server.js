@@ -101,6 +101,7 @@ app.get('/api/veiculos', (req, res) => {
                 modeloId: veiculo.modeloId,
                 modelo: modelo ? modelo.nome : 'Modelo não encontrado',
                 placa: veiculo.placa,
+                ano: veiculo.ano,
                 cor: veiculo.cor
             };
         });
@@ -119,11 +120,11 @@ app.get('/api/veiculos', (req, res) => {
 
 app.post('/api/veiculos', (req, res) => {
     try {
-        const { modeloId, placa, cor } = req.body;
+        const { modeloId, placa, ano, cor } = req.body;
 
-        if (!modeloId || !placa || !cor) {
+        if (!modeloId || !placa || !ano || !cor) {
             return res.status(400).json({
-                erro: 'Modelo, placa e cor são obrigatórios'
+                erro: 'Modelo, placa, ano e cor são obrigatórios'
             });
         }
 
@@ -135,6 +136,15 @@ app.post('/api/veiculos', (req, res) => {
         if (!regexPlacaAntiga.test(placaFormatada) && !regexPlacaMercosul.test(placaFormatada)) {
             return res.status(400).json({
                 erro: 'Placa em formato inválido'
+            });
+        }
+
+        const anoNumero = Number(ano);
+        const anoAtual = new Date().getFullYear();
+
+        if (!Number.isInteger(anoNumero) || anoNumero < 1900 || anoNumero > anoAtual + 1) {
+            return res.status(400).json({
+                erro: 'Ano inválido'
             });
         }
 
@@ -169,6 +179,7 @@ app.post('/api/veiculos', (req, res) => {
             id: novoId,
             modeloId: Number(modeloId),
             placa: placaFormatada,
+            ano: anoNumero,
             cor: cor
         };
 
@@ -181,6 +192,7 @@ app.post('/api/veiculos', (req, res) => {
             modeloId: novoVeiculo.modeloId,
             modelo: modelo.nome,
             placa: novoVeiculo.placa,
+            ano: novoVeiculo.ano,
             cor: novoVeiculo.cor
         });
 
